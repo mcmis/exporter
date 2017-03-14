@@ -1,0 +1,24 @@
+{
+    "name": "mcmis/exporter",
+    "description": "The workflow package for MCMIS",
+    "type": "mcmis-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Farhan Wazir",
+            "email": "farhan.wazir@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework" : "5.2.*",
+        "mcmis/base" : "dev-master",
+        "maatwebsite/excel": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "MCMIS\\Exporter\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
