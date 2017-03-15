@@ -20,5 +20,10 @@
             "MCMIS\\Exporter\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.5.x-dev"
+        }
+    },
+    "minimum-stability": "stable"
 }
