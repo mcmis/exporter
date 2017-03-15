@@ -12,7 +12,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework" : "5.2.*",
-        "mcmis/base" : "dev-master",
+        "mcmis/base" : "@dev",
         "maatwebsite/excel": "^2.1"
     },
     "autoload": {
