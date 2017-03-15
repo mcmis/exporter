@@ -3,8 +3,9 @@
 namespace MCMIS\Exporter;
 
 use MCMIS\Exporter\Collections\Chart;
+use MCMIS\Contracts\Exporter;
 
-class Container
+class Container implements Exporter
 {
 
     protected $columns_index = [];
