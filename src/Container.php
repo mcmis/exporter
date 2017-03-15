@@ -2,16 +2,22 @@
 
 namespace MCMIS\Exporter;
 
-
-use MCMIS\Exporter\Traits\ChartTrait;
+use MCMIS\Exporter\Collections\Chart;
 
 class Container
 {
 
-    use ChartTrait;
-
     protected $columns_index = [];
 
+    protected $extenders = [
+        'complaints' => 'MCMIS\Exporter\Extenders\Complaints',
+    ];
+
+    /**
+     * Container constructor.
+     *
+     * @param bool $big_sheet
+     */
     function __construct($big_sheet = false)
     {
         $this->setColumnsIndex();
@@ -58,7 +64,7 @@ class Container
         }
     }
 
-    public function getColumnsIndex(){
+    public function getColumnsIndexing(){
         return $this->columns_index;
     }
 
@@ -69,7 +75,22 @@ class Container
     }
 
     public function getSheetHiddenState(){
-        return static::SHEETSTATE_HIDDEN;
+        return \PHPExcel_Worksheet::SHEETSTATE_HIDDEN;
+    }
+
+    public function set($extender){
+        if (!isset($this->extenders[$extender])) throw new \ErrorException("Unknown extender set \"{$extender}\" in exporter.");
+        else $extender = $this->extenders[$extender];
+        return new $extender($this);
+    }
+
+    public function __call($name, $params)
+    {
+        if(in_array($name, get_class_methods(Chart::class))){
+            call_user_func_array([Chart::class, $name], $params);
+        }
+
+        throw new \BadMethodCallException('Method '. $name .' not found');
     }
 
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace MCMIS\Exporter\Traits;
+namespace MCMIS\Exporter\Collections;
 
 
-trait ChartTrait
+class Chart
 {
 
     public function generateChart($title, $y_labels, $x_labels, $data, $type = 'barchart', $grouping = 'standard', $legend_position = 'left'){
