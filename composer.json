@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "mcmis/base" : "v0.5.*@dev",
+        "mcmis/base" : "0.5.*@dev",
         "maatwebsite/excel": "^2.1"
     },
     "autoload": {
