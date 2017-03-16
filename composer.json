@@ -11,8 +11,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework" : "5.2.*",
-        "mcmis/base" : "0.5.*@dev",
+        "mcmis/base" : "v0.5.*@dev",
         "maatwebsite/excel": "^2.1"
     },
     "autoload": {
@@ -22,7 +21,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.5.x-dev"
+            "dev-master": "0.8.x-dev"
         }
     },
     "minimum-stability": "dev"
