@@ -14,7 +14,7 @@ class Register
      * @return void
      */
     public function bootstrap(Application $app){
-        $app->register(new Maatwebsite\Excel\ExcelServiceProvider($app));
+        $app->register(new \Maatwebsite\Excel\ExcelServiceProvider($app));
         $app->bind('MCMIS\Contracts\Exporter', 'MCMIS\Exporter\Container');
     }
 
