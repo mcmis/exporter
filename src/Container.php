@@ -4,6 +4,7 @@ namespace MCMIS\Exporter;
 
 use MCMIS\Exporter\Collections\Chart;
 use MCMIS\Contracts\Exporter;
+use Illuminate\Support\Facades\Event;
 
 class Container implements Exporter
 {
@@ -48,6 +49,7 @@ class Container implements Exporter
                     $closure($sheet);
                 });
             }
+            Event::fire('exporter:OnCreating', [app()->make('excel'), $file]);
         })->$response($extension);
     }
 
