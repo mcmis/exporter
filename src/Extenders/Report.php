@@ -3,7 +3,7 @@
 namespace MCMIS\Exporter\Extenders;
 
 use MCMIS\Contracts\Exporter;
-use MCMIS\Contracts\ExporterExtender;
+use MCMIS\Contracts\ExporterExtenders\ReportExporterExtender as ExporterExtender;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 
