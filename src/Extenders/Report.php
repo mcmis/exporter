@@ -21,15 +21,18 @@ class Report implements ExporterExtender
 
     public function export($data)
     {
-        $stateHidden = $this->exporter->getSheetHiddenState();
+        $name = 'Report-' . Carbon::now()->format('mdy-hmi') . 'R' . rand(0, 99);
 
-        Event::listen('exporter:OnCreating', function ($obj, $file) use ($stateHidden) {
-            $obj->getSheetByName('Statistics')->setSheetState($stateHidden);
-            return $obj;
+        Event::listen('exporter:'.$name.'.OnCreating', function () {
+            //TODO: event on creating sheet
+        });
+
+        Event::listen('exporter:'.$name.'.OnCreated', function ($file) {
+            //TODO: event on created sheet
         });
 
         $this->exporter->create(
-            'Report-' . Carbon::now()->format('mdy-hmi') . 'R' . rand(0, 99),
+            $name,
             'xlsx',
             'Complaints Report',
             array_merge([

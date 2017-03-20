@@ -44,7 +44,8 @@ class Container implements Exporter
      */
     public function create($name, $extension, $title, $sheets = [], $response = 'download')
     {
-        sys()->make('excel')->create($name, function ($file) use ($title, $sheets) {
+        //TODO: Event::fire('exporter:'.$name.'.OnCreating', []);
+        $file = sys()->make('excel')->create($name, function ($file) use ($title, $sheets) {
             $file->setTitle($title)
                 ->setCreator('Farhan Wazir')
                 ->setCompany('Creative Ideator')
@@ -54,8 +55,9 @@ class Container implements Exporter
                     $closure($sheet);
                 });
             }
-            //TODO: Event::fire('exporter:OnCreating', [sys()->make('excel'), $file]);
-        })->$response($extension);
+        });
+        //TODO: Event::fire('exporter:'.$name.'.OnCreated', [$file]);
+        $file->$response($extension);
     }
 
     protected function setColumnsIndex(){
