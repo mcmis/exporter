@@ -25,6 +25,7 @@ class Report implements ExporterExtender
 
         Event::listen('exporter:OnCreating', function ($obj, $file) use ($stateHidden) {
             $obj->getSheetByName('Statistics')->setSheetState($stateHidden);
+            return $obj;
         });
 
         $this->exporter->create(
