@@ -54,7 +54,7 @@ class Container implements Exporter
                     $closure($sheet);
                 });
             }
-            Event::fire('exporter:OnCreating', [sys()->make('excel'), $file]);
+            //TODO: Event::fire('exporter:OnCreating', [sys()->make('excel'), $file]);
         })->$response($extension);
     }
 
