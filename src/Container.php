@@ -12,19 +12,24 @@ class Container implements Exporter
     protected $columns_index = [];
 
     protected $extenders = [
-        'complaints' => 'MCMIS\Exporter\Extenders\Complaints',
+        'complain' => 'MCMIS\Exporter\Extenders\Complain',
+        'report' => 'MCMIS\Exporter\Extenders\Report',
     ];
+
+    protected $chart;
 
     /**
      * Container constructor.
      *
      * @param bool $big_sheet
      */
-    function __construct($big_sheet = false)
+    function __construct($big_sheet = false, Chart $chart)
     {
         $this->setColumnsIndex();
         if($big_sheet)
             $this->extendSheetAsBig();
+
+        $this->chart = $chart;
     }
 
     /**
@@ -39,7 +44,7 @@ class Container implements Exporter
      */
     public function create($name, $extension, $title, $sheets = [], $response = 'download')
     {
-        app()->make('excel')->create($name, function($file) use ($title, $sheets){
+        sys()->make('excel')->create($name, function ($file) use ($title, $sheets) {
             $file->setTitle($title)
                 ->setCreator('Farhan Wazir')
                 ->setCompany('Creative Ideator')
@@ -49,7 +54,7 @@ class Container implements Exporter
                     $closure($sheet);
                 });
             }
-            Event::fire('exporter:OnCreating', [app()->make('excel'), $file]);
+            Event::fire('exporter:OnCreating', [sys()->make('excel'), $file]);
         })->$response($extension);
     }
 
@@ -89,8 +94,8 @@ class Container implements Exporter
 
     public function __call($name, $params)
     {
-        if(in_array($name, get_class_methods(Chart::class))){
-            call_user_func_array([Chart::class, $name], $params);
+        if (in_array($name, get_class_methods($this->chart))) {
+            return call_user_func_array([$this->chart, $name], $params);
         }
 
         throw new \BadMethodCallException('Method '. $name .' not found');
