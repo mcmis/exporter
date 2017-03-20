@@ -41,15 +41,25 @@ class Report implements ExporterExtender
                 $data_sheet = 'Statistics';
                 $sheet->addChart($this->exporter->generateChart(
                     'Complain Categories report',
-                    $this->getChartYLables($data_sheet),
+                    $this->getBarChartYLabels($data_sheet),
                     [$this->exporter->prepareChartDataSeriesValue('String', $data_sheet . '!$A$2:$A$41', NULL, 40)],
-                    $this->getChartData($data_sheet)
+                    $this->getBarChartData($data_sheet),
+                    'barchart', 'stacked'
                 )->setTopLeftPosition('A1')->setBottomRightPosition('T30'));
+
+                /* Line chart */
+                $sheet->addChart($this->exporter->generateChart(
+                    'Complain Categories report',
+                    $this->getLineChartYLabels($data_sheet),
+                    [$this->exporter->prepareChartDataSeriesValue('String', $data_sheet . '!$B$1:$K$1', NULL, 10)],
+                    $this->getLineChartData($data_sheet),
+                    'linechart'
+                )->setTopLeftPosition('A31')->setBottomRightPosition('T60'));
             }] : []))
         );
     }
 
-    protected function getChartYLables($sheet)
+    protected function getBarChartYLabels($sheet)
     {
         $output = [];
         foreach ([$sheet . '!$B$1', $sheet . '!$C$1', $sheet . '!$D$1', $sheet . '!$E$1', $sheet . '!$F$1',
@@ -59,12 +69,31 @@ class Report implements ExporterExtender
         return $output;
     }
 
-    protected function getChartData($sheet)
+    protected function getBarChartData($sheet)
     {
         $output = [];
         foreach ([$sheet . '!$B$2:$B$41', $sheet . '!$C$2:$C$41', $sheet . '!$D$2:$D$41', $sheet . '!$E$2:$E$41', $sheet . '!$F$2:$F$41',
                      $sheet . '!$G$2:$G$41', $sheet . '!$H$2:$H$41', $sheet . '!$I$2:$I$41', $sheet . '!$J$2:$J$41', $sheet . '!$K$2:$K$41'] as $col) {
             $output[] = $this->exporter->prepareChartDataSeriesValue('Number', $col, NULL, 40);
+        }
+        return $output;
+    }
+
+    protected function getLineChartYLabels($sheet)
+    {
+        $output = [];
+        for ($i = 2; $i < 41; $i++) {
+            $output[] = $this->exporter->prepareChartDataSeriesValue('String', $sheet . '!$A$'.$i, NULL, 1);
+        }
+        return $output;
+    }
+
+    protected function getLineChartData($sheet)
+    {
+        $output = [];
+        $index = $this->exporter->getColumnsIndexing();
+        for ($i = 2; $i < 41; $i++) {
+            $output[] = $this->exporter->prepareChartDataSeriesValue('Number', $sheet . '!$'.$index[1].'$'.$i.':$'.$index[10].'$'.$i, NULL, 10);
         }
         return $output;
     }
