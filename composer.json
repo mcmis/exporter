@@ -11,18 +11,12 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "mcmis/base" : "0.5.*@dev",
+        "mcmis/base" : ">=0.5",
         "maatwebsite/excel": "^2.1"
     },
     "autoload": {
         "psr-4": {
             "MCMIS\\Exporter\\": "src/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.8.x-dev"
-        }
-    },
-    "minimum-stability": "dev"
+    }
 }
