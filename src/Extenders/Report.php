@@ -21,7 +21,7 @@ class Report implements ExporterExtender
 
     public function export($data)
     {
-        $name = 'Report-' . Carbon::now()->format('mdy-hmi') . 'R' . rand(0, 99);
+        $name = 'Report-' . Carbon::now()->format('dmy');
 
         Event::listen('exporter:'.$name.'.OnCreating', function () {
             //TODO: event on creating sheet
@@ -36,14 +36,14 @@ class Report implements ExporterExtender
             'xlsx',
             'Complaints Report',
             array_merge([
-                'Statistics' => function ($sheet) use ($data) {
+                'Lista_por_Categorías' => function ($sheet) use ($data) {
                     $sheet->row(1, $data['header']);
                     $sheet->rows($data['contents']);
                 }
-            ], ($this->isChartEnabled() ? ['Graphical Report' => function ($sheet) {
-                $data_sheet = 'Statistics';
+            ], ($this->isChartEnabled() ? ['Gráfica_estadística' => function ($sheet) {
+                $data_sheet = 'Lista_por_Categorías';
                 $sheet->addChart($this->exporter->generateChart(
-                    'Complain Categories report',
+                    'Reporte gráfico por categorías',
                     $this->getBarChartYLabels($data_sheet),
                     [$this->exporter->prepareChartDataSeriesValue('String', $data_sheet . '!$A$2:$A$41', NULL, 40)],
                     $this->getBarChartData($data_sheet),
@@ -52,7 +52,7 @@ class Report implements ExporterExtender
 
                 /* Line chart */
                 $sheet->addChart($this->exporter->generateChart(
-                    'Complain Categories report',
+                    'Reporte gráfico por categorías',
                     $this->getLineChartYLabels($data_sheet),
                     [$this->exporter->prepareChartDataSeriesValue('String', $data_sheet . '!$B$1:$K$1', NULL, 10)],
                     $this->getLineChartData($data_sheet),
